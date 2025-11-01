@@ -1,0 +1,72 @@
+<div class="container py-5">
+  <div class="row">
+    <!-- Job Details -->
+    <div class="col-md-6">
+      <h2 class="mb-4">Job Details</h2>
+      <ul class="list-group">
+        <li class="list-group-item"><strong>Job Profile: </strong>{{ job()?.jobProfile }}</li>
+        <li class="list-group-item"><strong>Job ID: </strong>{{ job()?.jobId }}</li>
+        <li class="list-group-item">
+          <strong>Description:</strong>
+          <p>
+            {{ job()?.jobDesc }}
+          </p>
+        </li>
+        <li class="list-group-item"><strong>Required Experience: </strong>{{ job()?.requiredExperience }}+ years</li>
+        <li class="list-group-item">
+          <strong>Tech Stack: </strong>
+          @for (tech of job()?.techStack; track $index) {
+          <span class="badge bg-secondary text-white mx-1 px-2 py-1">{{ tech }}</span>
+          }
+        </li>
+      </ul>
+    </div>
+
+    @if(this.authService.getUserRole() === 'CANDIDATE'){
+    <div class="col-md-6">
+      <h2 class="mb-4">Apply for this Job</h2>
+      <form [formGroup]="applyForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data" novalidate>
+        <div class="mb-3">
+          <label for="name" class="form-label">Full Name<sup class="text-danger">*</sup></label>
+          <input formControlName="name" type="text" id="name" class="form-control" required />
+          @if(applyForm.get('name')?.invalid && applyForm.get('name')?.touched){
+          <div class="text-danger small">
+            Name is required.
+          </div>
+          }
+        </div>
+        <div class="mb-3">
+          <label for="emailAddress" class="form-label">Email address<sup class="text-danger">*</sup></label>
+          <input type="email" class="form-control" id="emailAddress" formControlName="email" required />
+          @if(applyForm.get('email')?.invalid && applyForm.get('email')?.touched){
+          <div class="text-danger small">
+            Email is required.
+          </div>
+          }
+        </div>
+        <div class="mb-3">
+          <label for="resume" class="form-label">Upload Resume<sup class="text-danger">*</sup></label>
+          <input class="form-control" type="file" id="resume" formControlName="resume" (change)="onFileSelect($event)"
+            required />
+          @if(applyForm.get('resume')?.invalid && applyForm.get('resume')?.touched){
+          <div class="text-danger small">
+            Resume is required.
+          </div>
+          }
+        </div>
+        <div class="mb-3">
+          <label for="coverLetter" class="form-label">Cover Letter</label>
+          <textarea class="form-control" id="coverLetter" rows="4" formControlName="coverLetter"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary fw-bold">Submit Application</button>
+      </form>
+
+      @if (submittedApplication) {
+      <div class="mt-5 text-success">
+        <h4>{{ submittedApplication }}</h4>
+      </div>
+      }
+    </div>
+    }
+  </div>
+</div>

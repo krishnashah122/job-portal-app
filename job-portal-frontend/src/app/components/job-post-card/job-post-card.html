@@ -1,0 +1,35 @@
+<div class="card shadow-sm border-0 mb-4 h-100 job-card">
+  <div class="card-header bg-primary text-white">
+    <h5 class="mb-0">{{ job()?.jobProfile }}</h5>
+    <small class="text-light">Job ID: {{ job()?.jobId }}</small>
+  </div>
+
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Description:</strong><br>
+      {{ job()?.jobDesc || 'No description available.' }}
+    </p>
+
+    <p class="card-text">
+      <strong>Required Experience:</strong> {{ job()?.requiredExperience }}+ years
+    </p>
+
+    <div>
+      <strong>Tech Stack:</strong>
+      <div class="mt-2 d-flex flex-wrap gap-2">
+        @for (tech of job()?.techStack ?? []; track $index) {
+          <span class="badge bg-secondary text-white px-3 py-1">{{ tech }}</span>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer bg-light text-end mt-auto">
+    @if(userRole === 'EMPLOYER') {
+      <button class="btn btn-outline-primary btn-sm mx-2 fw-bold" (click)="onUpdate(job()?.jobId)">Update</button>
+      <button class="btn btn-outline-danger btn-sm fw-bold" (click)="deleteJob()">Delete</button>
+    } @else {
+      <button class="btn btn-outline-primary btn-sm fw-bold" [routerLink]="['/job', job()?.jobId]">Apply Now</button>
+    }
+  </div>
+</div>

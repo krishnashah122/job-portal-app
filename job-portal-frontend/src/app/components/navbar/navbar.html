@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary px-4">
+  <div class="container-fluid w-75">
+    <a class="navbar-brand fw-bold text-primary" routerLink="/">JobLink</a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarTogglerDemo01"
+      aria-controls="navbarTogglerDemo01"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <!-- Left Links -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/contact">Contact</a>
+        </li>
+      </ul>
+
+      <!-- Center Search Bar -->
+      <form class="d-flex mx-auto" role="search" style="max-width: 400px; width: 100%;">
+        <input class="form-control me-2" [(ngModel)]="searchKeyword" name="search" placeholder="Search for job profile" aria-label="Search" />
+        <button class="btn btn-outline-primary fw-bold" type="submit" (click)="onSearch()">Search</button>
+      </form>
+
+      <!-- Right Buttons -->
+      <div class="d-flex ms-auto gap-2">
+        @if (!authService.checkLoggedIn()) {
+          <a class="btn btn-outline-primary fw-bold" routerLink="/login">Login</a>
+          <a class="btn btn-primary fw-bold" routerLink="/signup">Sign Up</a>
+        }@else {
+          @if (userRole === 'EMPLOYER') {
+            <a class="btn btn-outline-primary fw-bold" routerLink="/job">Post Job</a>
+            <a class="btn btn-outline-primary fw-bold" routerLink="/applications">View Applications</a>
+          }
+          <a class="btn btn-primary fw-bold" (click)="logout()">Logout</a>
+        }
+      </div>
+    </div>
+  </div>
+</nav>

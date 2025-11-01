@@ -1,0 +1,61 @@
+<div class="container mt-4">
+    <h2>All Job Applications</h2>
+
+    <br>
+
+    @if(isLoading){
+        <div class="text-center my-5">
+            <div class="spinner-border" role="status"></div>
+            <p>Loading applications...</p>
+        </div>
+    }
+
+    @if(errorMessage){
+        <div class="alert alert-danger">
+            {{ errorMessage }}
+        </div>
+    }
+
+    @if(jobApplications.length > 0){
+        <table class="table table-striped">
+            <thead class="table-primary">
+                <tr>
+                    <th>ID</th>
+                    <th>Applicant Name</th>
+                    <th>Email</th>
+                    <th>Job Post</th>
+                    <th>Date</th>
+                    <th>Cover Letter</th>
+                    <th>Resume</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(jobApplication of jobApplications; track $index){
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ jobApplication.name }}</td>
+                        <td>{{ jobApplication.email }}</td>
+                        <td class="text-center">
+                            <a href="/job/{{ jobApplication.jobId }}" class="btn btn-outline-primary btn-sm">View</a>
+                        </td>
+                        <td>{{ jobApplication.appliedAt | date:'yyyy-MM-dd' }}</td>
+                        <td class="text-center">
+                            @if(jobApplication.coverLetter){
+                                <button class="btn btn-outline-primary btn-sm" (click)="showCoverLetter(jobApplication.coverLetter)">View</button>
+                            }@else{
+                                —
+                            }
+                        </td>
+                        <td>
+                            <a [href]="jobApplication.resumeFilePath" target="_blank" rel="noopener noreferrer">{{ jobApplication.resumeFileName }}</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }@else if(!isLoading){
+        <div class="alert alert-info">
+            No applications found.
+        </div>
+    }
+</div>

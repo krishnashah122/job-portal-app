@@ -1,0 +1,102 @@
+<div class="container my-5">
+  <h2 class="mb-4 text-primary">Add New Job Post</h2>
+
+  <form [formGroup]="jobObj" (ngSubmit)="onSubmit()" novalidate>
+    
+    <div class="mb-3">
+      <label for="jobId" class="form-label">Job ID</label>
+      <input
+        formControlName ="jobId"
+        type="number"
+        id="jobId"
+        class="form-control"
+        required
+      />
+      @if(jobObj.get('jobId')?.invalid && jobObj.get('jobId')?.touched){
+        <div class="text-danger small">
+            Job ID is required and must be a number.
+        </div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label for="jobProfile" class="form-label">Job Profile</label>
+      <input
+        formControlName="jobProfile"
+        type="text"
+        id="jobProfile"
+        class="form-control"
+      />
+      @if (jobObj.get('jobProfile')?.invalid && jobObj.get('jobProfile')?.touched) {
+        <div class="text-danger small">
+            Job Profile is required (min 3 characters).
+        </div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label for="jobDesc" class="form-label">Job Description</label>
+      <textarea
+        formControlName="jobDesc"
+        id="jobDesc"
+        class="form-control"
+        rows="3"
+      ></textarea>
+      @if (jobObj.get('jobDesc')?.invalid && jobObj.get('jobDesc')?.touched) {
+        <div class="text-danger small">
+            Job Description is required (min 10 characters).
+        </div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label for="requiredExperience" class="form-label">Required Experience (years)</label>
+      <input
+        formControlName="requiredExperience"
+        type="number"
+        id="requiredExperience"
+        class="form-control"
+      />
+      @if (jobObj.get('requiredExperience')?.invalid && jobObj.get('requiredExperience')?.touched) {
+        <div class="text-danger small">
+        Required Experience is required and cannot be negative.
+      </div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label for="techStack" class="form-label">Tech Stack</label>
+      <textarea
+        formControlName="techStack"
+        id="techStack"
+        class="form-control"
+        rows="3"
+      ></textarea>
+      @if (techStackCount() < 2 && jobObj.get('techStack')?.touched) {
+        <div class="text-danger small mt-1">
+            Please mention at least two technology.
+        </div>
+      }
+      
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary fw-bold"
+      [disabled]="jobObj.invalid || (jobObj.get('techStack')?.value?.length ?? 0) < 2"
+    >
+      {{ isEditMode ? 'Update' : 'Add' }} Job
+    </button>
+  </form>
+
+  @if (submittedJob) {
+    <div class="mt-5 text-success">
+      @if (isEditMode) {
+        <h4>Job Updated Successfully</h4>
+      }@else {
+        <h4>Job Posted Successfully</h4>
+      }
+    </div>
+  }
+  
+</div>

@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-5">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h3 class="card-title text-center mb-4">Sign Up</h3>
+
+          <form [formGroup]="signupObj" (ngSubmit)="onSubmit()">
+            <!-- Username -->
+            <div class="mb-3">
+              <label for="username" class="form-label">Username<sup class="text-danger">*</sup></label>
+              <input
+                formControlName="username"
+                type="text"
+                class="form-control"
+                id="username"
+                placeholder="Enter a username"
+                required
+              />
+              @if (signupObj.get('username')?.invalid && signupObj.get('username')?.touched) {
+                <div class="text-danger">Username is required (min 3 characters)</div>
+              }
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+              <label for="password" class="form-label">Password<sup class="text-danger">*</sup></label>
+              <input
+                formControlName="password"
+                type="password"
+                class="form-control"
+                id="password"
+                placeholder="Enter password"
+                required
+              />
+              @if (signupObj.get('password')?.invalid && signupObj.get('password')?.touched) {
+                <div class="text-danger">Password is required (min 6 characters)</div>
+              }
+            </div>
+
+            <!-- Role -->
+            <div class="mb-3">
+              <label for="role" class="form-label">Select Role<sup class="text-danger">*</sup></label>
+              <select formControlName="role" class="form-select" id="role" required>
+                <option value="" disabled selected>Select your role</option>
+                <option value="EMPLOYER">Employer</option>
+                <option value="CANDIDATE">Candidate</option>
+              </select>
+              @if (signupObj.get('role')?.invalid && signupObj.get('role')?.touched) {
+                <div class="text-danger">Role is required</div>
+              }
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary w-100 fw-bold">Sign Up</button>
+          </form>
+
+          <p class="text-center mt-3 fw-semibold">
+            Already have an account? <a routerLink="/login">Log in</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
