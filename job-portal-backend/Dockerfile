@@ -17,10 +17,10 @@ FROM eclipse-temurin:24-jdk
 WORKDIR /job-portal-app
 
 # Copy the built jar from build stage
-COPY --from=build /job-portal-app/target/job-portal-0.0.1-SNAPSHOT.jar job-portal-app.jar
+COPY --from=build /job-portal-app/target/job-portal-0.0.1-SNAPSHOT.jar .
 
 # Expose default Spring Boot port
 EXPOSE 8080
 
 # Run the Spring Boot jar
-ENTRYPOINT ["java","-jar","job-portal-app.jar"]
+ENTRYPOINT ["java","-jar","/job-portal-app/job-portal-0.0.1-SNAPSHOT.jar"]

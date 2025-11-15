@@ -2,7 +2,6 @@ package com.jobportal.job_portal_backend.controller;
 
 import com.jobportal.job_portal_backend.model.JobApplicationDTO;
 import com.jobportal.job_portal_backend.model.JobPost;
-import com.jobportal.job_portal_backend.model.JobApplication;
 import com.jobportal.job_portal_backend.model.JobPostDTO;
 import com.jobportal.job_portal_backend.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
